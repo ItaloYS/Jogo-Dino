@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0s1dejkkjd2j"]
+[gd_scene load_steps=12 format=3 uid="uid://d0s1dejkkjd2j"]
 
 [ext_resource type="Texture2D" uid="uid://ddsaabgarqh1k" path="res://TileMap/world_tileset.png" id="1_be8hj"]
 [ext_resource type="PackedScene" uid="uid://b6hq1fo2tv137" path="res://Scenes/player.tscn" id="2_4us16"]
@@ -438,6 +438,44 @@ pattern_0 = SubResource("TileMapPattern_3bvdk")
 pattern_1 = SubResource("TileMapPattern_tvfs3")
 pattern_2 = SubResource("TileMapPattern_pisp4")
 
+[sub_resource type="Animation" id="Animation_ljhu6"]
+resource_name = "move"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(135, 22), Vector2(135, 210)]
+}
+
+[sub_resource type="Animation" id="Animation_gjjvj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(135, 22)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i0ko0"]
+_data = {
+"RESET": SubResource("Animation_gjjvj"),
+"move": SubResource("Animation_ljhu6")
+}
+
 [node name="World1" type="Node2D"]
 position = Vector2(50, 50)
 
@@ -461,7 +499,13 @@ rotation_smoothing_enabled = true
 rotation_smoothing_speed = 10.0
 
 [node name="AnimatableBody2D" parent="." instance=ExtResource("3_0g31d")]
-position = Vector2(135, 18)
+position = Vector2(135, 22)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D"]
+libraries = {
+"": SubResource("AnimationLibrary_i0ko0")
+}
+autoplay = "move"
 
 [node name="AnimatableBody2D2" parent="." instance=ExtResource("3_0g31d")]
 position = Vector2(53, -9)
