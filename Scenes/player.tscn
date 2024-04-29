@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6hq1fo2tv137"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_peiof"]
+[ext_resource type="Texture2D" uid="uid://d0n77agdxm3rx" path="res://Sprites Dino/DinoSprites - vita.png" id="2_7ml34"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kf7pc"]
+atlas = ExtResource("2_7ml34")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tj1sk"]
+atlas = ExtResource("2_7ml34")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2gfr"]
+atlas = ExtResource("2_7ml34")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qyxop"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kf7pc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tj1sk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2gfr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ei7xo"]
+radius = 5.5
+height = 17.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_peiof")
+
+[node name="SpritePlayers" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qyxop")
+autoplay = "default"
+frame_progress = 0.210905
+speed_scale = 1.75
+
+[node name="CollisionPlayer" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("CapsuleShape2D_ei7xo")
