@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0s1dejkkjd2j"]
+[gd_scene load_steps=18 format=3 uid="uid://d0s1dejkkjd2j"]
 
 [ext_resource type="Texture2D" uid="uid://ddsaabgarqh1k" path="res://TileMap/world_tileset.png" id="1_be8hj"]
 [ext_resource type="PackedScene" uid="uid://b6hq1fo2tv137" path="res://Scenes/player.tscn" id="2_4us16"]
 [ext_resource type="PackedScene" uid="uid://b2fcpau2rekpb" path="res://Scenes/plataform.tscn" id="3_0g31d"]
 [ext_resource type="PackedScene" uid="uid://bb3d7lt18uqkq" path="res://Scenes/coin.tscn" id="4_y2enf"]
+[ext_resource type="PackedScene" uid="uid://b7yr88vg2hlom" path="res://Scenes/killzone.tscn" id="5_pfuw1"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_3bvdk"]
 tile_data = PackedInt32Array(0, 0, 3)
@@ -477,6 +478,21 @@ _data = {
 "move": SubResource("Animation_ljhu6")
 }
 
+[sub_resource type="Animation" id="Animation_4uoba"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(499, 195)]
+}
+
 [sub_resource type="Animation" id="Animation_fwy8k"]
 resource_name = "move"
 loop_mode = 2
@@ -493,26 +509,13 @@ tracks/0/keys = {
 "values": [Vector2(500, 218), Vector2(499, 195)]
 }
 
-[sub_resource type="Animation" id="Animation_4uoba"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(499, 195)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wishc"]
 _data = {
 "RESET": SubResource("Animation_4uoba"),
 "move": SubResource("Animation_fwy8k")
 }
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fihte"]
 
 [node name="World1" type="Node2D"]
 position = Vector2(50, 50)
@@ -529,6 +532,8 @@ layer_2/name = "FrontGrround"
 layer_2/tile_data = PackedInt32Array(851976, 196608, 8, 786440, 196608, 7, 720904, 196608, 6, 851972, 196608, 8, 720900, 196608, 5, 655364, 196608, 4, 786436, 196608, 6, 589831, 131072, 4, 655367, 131072, 5, 720903, 131072, 6, 589832, 196608, 4, 655368, 196608, 5, 589833, 262144, 4, 655369, 262144, 5, 720905, 262144, 6, 655363, 131072, 4, 720899, 131072, 5, 786435, 131072, 6, 655365, 262144, 4, 720901, 262144, 5, 786437, 262144, 6, 786454, 0, 3, 786458, 0, 3)
 
 [node name="Player" parent="." instance=ExtResource("2_4us16")]
+light_mask = 2
+visibility_layer = 2
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(3, 3)
@@ -558,3 +563,9 @@ autoplay = "move"
 
 [node name="Coin" parent="." instance=ExtResource("4_y2enf")]
 position = Vector2(88, 9)
+
+[node name="Killzone" parent="." instance=ExtResource("5_pfuw1")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(-60, 309)
+shape = SubResource("WorldBoundaryShape2D_fihte")
